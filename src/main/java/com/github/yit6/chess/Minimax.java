@@ -47,27 +47,28 @@ public class Minimax {
 	}
 
 	public void AddNodes() {
-		if (isParent && !board.isMated()) {
+		if (isParent) {
 			for (int i = 0; i < nodes.size(); i++) {
 				nodes.get(i).AddNodes();
 			}
 		}
 		else {
-			isParent = true;
-			nodes = new ArrayList();
-			List<Move> moves = board.legalMoves();
-			for (Move m : moves) {
-				board.doMove(m);
-				Board next = board.clone();
-				board.undoMove();
-				nodes.add(new Minimax(next, m,!max));
+			if (!board.isMated() && !board.isInsufficientMaterial() && !board.isDraw() && !board.isStaleMate()) {
+				isParent = true;
+				nodes = new ArrayList();
+				List<Move> moves = board.legalMoves();
+				for (Move m : moves) {
+					board.doMove(m);
+					Board next = board.clone();
+					board.undoMove();
+					nodes.add(new Minimax(next, m,!max));
+				}
 			}
 		}
 	}
 
 	public Move getBestMove() {
 		if (isParent) {
-			System.out.println(best.board);
 			return best.move;
 		} else {
 			return move;

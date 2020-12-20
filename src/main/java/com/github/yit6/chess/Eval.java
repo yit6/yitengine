@@ -16,13 +16,13 @@ public class Eval {
 			material += pieceValues[p.ordinal()];
 		}
 		s += material*3;
-		//if (board.isMated()) {
-			//if (board.getSideToMove() == Side.WHITE) {
-				//s = -10000;
-			//} else {
-				//s = 10000;
-			//}
-		//}
+		if (board.isMated()) {
+			if (board.getSideToMove() == Side.WHITE) {
+				s = -10000;
+			} else {
+				s = 10000;
+			}
+		}
 		//if (board.isKingAttacked()) {
 			//if (board.getSideToMove() == Side.WHITE) {
 				//s = -1;
