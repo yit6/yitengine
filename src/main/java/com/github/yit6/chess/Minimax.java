@@ -74,4 +74,11 @@ public class Minimax {
 			return move;
 		}
 	}
+	public Move getBestResponse() {
+		if (isParent) {
+			return best.getBestMove();
+		} else {
+			return null;
+		}
+	}
 }

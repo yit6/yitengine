@@ -1,5 +1,4 @@
-Engine.class
-main.class
-Uci.class
 Minimax.class
 Eval.class
+main.class
+Uci.class

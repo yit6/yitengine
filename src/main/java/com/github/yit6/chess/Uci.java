@@ -1,13 +1,12 @@
 import com.github.bhlangonijr.chesslib.Board;
 import com.github.bhlangonijr.chesslib.move.Move;
+import com.github.bhlangonijr.chesslib.Side;
 
 public class Uci {
 	public Board board;
-	public Engine engine;
 
 	public Uci(Board board) {
 		this.board = board;
-		this.engine = new Engine();
 	}
 
 	public String parse(String command) {
@@ -26,7 +25,7 @@ public class Uci {
 		} else if (command.equals("quit")) {
 			return "exitting";
 		} else if (command.startsWith("go")) {
-			return "bestmove "+engine.uciGo(board).toString();
+			return uciGo(board);
 		} else {
 			return "Command not found: "+command;
 		}
@@ -56,5 +55,21 @@ public class Uci {
 			Move m = new Move(move, board.getSideToMove());
 			board.doMove(new Move(move, board.getSideToMove()),false);
 		}
+	}
+	
+	public String uciGo(Board board) {
+		boolean max = board.getSideToMove()==Side.WHITE;
+		Minimax minimax = new Minimax(board, max);
+		minimax.AddNodes();
+		minimax.AddNodes();
+		minimax.AddNodes();
+		minimax.GetScore();
+		Move ponder = minimax.getBestResponse();
+		Move out = minimax.getBestMove();
+		if (ponder == null) {
+			return "bestmove "+out.toString();
+		} else {
+			return "bestmove "+out.toString()+" ponder "+ponder.toString();
+		}	
 	}
 }
