@@ -8,7 +8,6 @@ public class Eval {
 	 * high favors white, low favors black
 	 */
 	public static int Score(Board board) {
-		char[] fen = board.getFen().toCharArray();
 		int material = 0;
 		int s = 0;
 		for (Square sq : Square.values()) {
